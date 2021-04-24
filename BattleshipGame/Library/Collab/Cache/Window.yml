@@ -14,30 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SimpleSelectedItems:
     m_Keys:
-    - Assets/Scenes/CannonMinigame.unity
-    - Assets/Scenes/CreateScreen.unity
-    - Assets/Scenes/GameSetupScreen.unity
-    - Assets/Scenes/InGameScreen.unity
-    - Assets/Scenes/LoginScreen.unity
-    - Assets/Scenes/NewGameScene.unity
-    - Assets/Scenes/NewGameScene.unity.meta
-    - Assets/Scenes/StartScreen.unity
+    - Assets/Scenes/HackingMinigame.unity
     - Assets/Scripts/AccountAuthentication.cs
-    - Assets/Scripts/HealthBar.cs
-    - Assets/Scripts/LaunchHandler.cs
-    - Assets/Scripts/RecieveMessage.cs
-    - Assets/Scripts/TimerCountdown.cs
-    - Assets/Sprites/water_units2.png
-    - Assets/Sprites/water_units2.png.meta
-    - Assets/Sprites/water_units2Water.png
-    - Assets/Sprites/water_units2Water.png.meta
-    - Assets/clouds.jpg
-    - Assets/clouds.jpg.meta
-    - Assets/water.png
-    - Assets/water.png.meta
-    - ProjectSettings/EditorBuildSettings.asset
     - 
-    m_Values: 0000000000000000000000000000000000000000000000
+    m_Values: 000000
   RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 

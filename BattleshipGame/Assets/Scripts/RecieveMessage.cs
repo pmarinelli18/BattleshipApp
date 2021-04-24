@@ -18,14 +18,18 @@ public class RecieveMessage: MonoBehaviour
     public Text Player2Health;
     public Text Player1UserName;
     public Text Player2UserName;
+    public GameObject AccountManager;
     [SerializeField] private HealthBar Player1HealthBar;
     [SerializeField] private HealthBar Player2HealthBar;
+    public GameObject InGameScreenHandler;
+
 
     [SerializeField] BoatState boatState;
     
 
     public void HandleMessage(string data)
     {
+        
         Debug.Log(data);
         try
         {
@@ -73,8 +77,11 @@ public class RecieveMessage: MonoBehaviour
                 }
                 else
                 {
+                    AccountManager = GameObject.Find("AccountManager");
                     Player1.text = message.userNames[0];
                     Player2.text = message.userNames[1];
+                    AccountManager.GetComponent<GlobalVariables>().updatePlayerName(message.userNames[0]);
+                    AccountManager.GetComponent<GlobalVariables>().updateOponentName(message.userNames[1]);
                     Player2Name.GetComponent<Image>().sprite= Player2Sprite;
                     ErrorMsg.text = "Game Filled";
                     Start.SetActive(true);
@@ -94,22 +101,33 @@ public class RecieveMessage: MonoBehaviour
                 
                 var health = boatState.boatHealth;
                 var userNames = boatState.userName;
-                Player2Health.text = health.p2Health;
-                Player1Health.text = health.p1Heath;
-                Player1UserName.text = userNames.p1UserName;
-                Player2UserName.text = userNames.p2UserName;
-
-
+                Debug.Log(health.p1Health);
+                //Player2Health.text = health.p2Health;
+                //Player1Health.text = health.p1Heath;
+                //Player1UserName.text = userNames.p1UserName;
+                //Player2UserName.text = userNames.p2UserName;
+                InGameScreenHandler = GameObject.Find("InGameScreenHandler");
+                AccountManager = GameObject.Find("AccountManager");
+                AccountManager.GetComponent<GlobalVariables>().updatePlayerHealth(int.Parse(health.p1Health));
+                InGameScreenHandler.GetComponent<InGameScreenHandler>().setBoat(health.p1Health, health.p2Health, boatState.stateOfBoatFeatures.radar, boatState.stateOfBoatFeatures.torpedo, boatState.stateOfBoatFeatures.cannons.state, boatState.stateOfBoatFeatures.cannons.numberOfCannons, boatState.stateOfBoatFeatures.incomingTorpedo);
                 //Vector3 otherHealthVector = new Vector3(int.Parse(health.p1Heath) / 100, 1, 1);
                 //Vector3 myHealthVector = new Vector3(int.Parse(health.p2Health) / 100, 1, 1);
-                Player1HealthBar.SetSize((float)int.Parse(health.p1Heath) / 100);  //.GetComponent<Transform>().localScale = myHealthVector;
-                Player2HealthBar.SetSize((float)int.Parse(health.p2Health) / 100); //.GetComponent<Transform>().localScale = otherHealthVector;
+                //Player1HealthBar.SetSize((float)int.Parse(health.p1Heath) / 100);  //.GetComponent<Transform>().localScale = myHealthVector;
+                //Player2HealthBar.SetSize((float)int.Parse(health.p2Health) / 100); //.GetComponent<Transform>().localScale = otherHealthVector;
             }
         }
 
-        if (SceneManager.GetActiveScene().name == "CannonMinigame"){
+        if (SceneManager.GetActiveScene().name == "CannonMinigame" || SceneManager.GetActiveScene().name == "MissleMinigame" || SceneManager.GetActiveScene().name == "FixBoatMinigame" || SceneManager.GetActiveScene().name == "NavigationMinigame" || SceneManager.GetActiveScene().name == "HackingMinigame" || SceneManager.GetActiveScene().name == "radarRepairGuessGame")
+            {
             if (message.id == "continueToInGameScreen"){
                 SceneManager.LoadScene("InGameScreen");
+            }
+            if (message.id == "gameOver"){
+                if (message.endResult == "lost"){
+                	AccountManager = GameObject.Find("AccountManager");
+                	AccountManager.GetComponent<GlobalVariables>().updateEndOfGameResult("You lost");
+                }
+                SceneManager.LoadScene("EndGameScene");
             }
         }
         }
@@ -124,14 +142,15 @@ public class MyClass
 {
     public string id;
     public bool result;
+    public string endResult;
     public string[] userNames;
 }
 
 
     [System.Serializable]
     public class BoatHealth    {
+        public string p1Health;
         public string p2Health;
-        public string p1Heath;
     }
 
     [System.Serializable]
@@ -151,6 +170,7 @@ public class MyClass
         public Cannons cannons;
         public string radar;
         public string torpedo;
+        public string incomingTorpedo;
     }
 
     [System.Serializable]

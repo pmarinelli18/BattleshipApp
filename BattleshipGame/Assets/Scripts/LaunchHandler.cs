@@ -19,6 +19,8 @@ public class LaunchHandler : MonoBehaviour
     public Text win;
     public Text outofammo;
     public Transform continuebutton;
+    private bool gameOver;
+   
 
     private GameObject myObject;
 
@@ -26,10 +28,12 @@ public class LaunchHandler : MonoBehaviour
     void Start()
     {
         gameHasEnded = false;
+        gameOver = false;
         shots = 1;
         win.enabled = false;
         outofammo.enabled = false;
         continuebutton.gameObject.SetActive(false);
+        explosion.GetComponent<Renderer>().sortingLayerName = "AboveBG";
     }
 
     // Update is called once per frame
@@ -37,7 +41,8 @@ public class LaunchHandler : MonoBehaviour
     {
         if (timer.text == "0")
         {
-            gameover(0);
+            if(!gameOver)
+                gameover(0);
         }
     }
 
@@ -50,6 +55,7 @@ public class LaunchHandler : MonoBehaviour
             Shell.Play();
             if (boat.bounds.Contains(new Vector2(reticle.position.x, boat_pos.position.y)))
             {
+                gameOver = true;
                 StartCoroutine(hit());
             }
             else
@@ -60,7 +66,9 @@ public class LaunchHandler : MonoBehaviour
         if (shots == 0)
         {
             outofammo.enabled = true;
-            gameover(0);
+            timer.text = "0";
+            if (!gameOver)
+                gameover(0);
         }
     }
 

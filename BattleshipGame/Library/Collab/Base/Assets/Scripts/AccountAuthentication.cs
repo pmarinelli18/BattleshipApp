@@ -15,7 +15,7 @@ public class AccountAuthentication : MonoBehaviour
 {
     public string userName;
     public GameObject GameManager;
-    TcpClient client = new TcpClient("localHost", 80);
+    TcpClient client = new TcpClient("localhost", 80);
     public GameObject recieverHandler;
 
     Queue messages = new Queue();
@@ -62,6 +62,8 @@ public class AccountAuthentication : MonoBehaviour
                     // Process the data sent by the client.
                     UnityMainThread.wkr.AddJob(() => {
                         recieverHandler = GameObject.Find("SceneConnectionManger");
+                        Debug.Log("AA");
+                        Debug.Log(data);
                         recieverHandler.GetComponent<RecieveMessage>().HandleMessage(data);
                     });
                    

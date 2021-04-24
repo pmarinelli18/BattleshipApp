@@ -568,9 +568,9 @@ RectTransform:
   m_Father: {fileID: 2107041911}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 342.38, y: -772.01}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 1, y: -340}
   m_SizeDelta: {x: 9.780029, y: 3.1500244}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1361745194
@@ -778,9 +778,9 @@ RectTransform:
   m_Father: {fileID: 2107041911}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -337, y: -772}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 1, y: -571}
   m_SizeDelta: {x: 9.539978, y: 2.8000488}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1425787546
@@ -1120,7 +1120,7 @@ GameObject:
   - component: {fileID: 2028005597}
   - component: {fileID: 2028005600}
   m_Layer: 0
-  m_Name: SceneConnectionManger
+  m_Name: SceneConnectionManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1148,16 +1148,18 @@ MonoBehaviour:
   Player2Health: {fileID: 0}
   Player1UserName: {fileID: 0}
   Player2UserName: {fileID: 0}
+  AccountManager: {fileID: 0}
   Player1HealthBar: {fileID: 0}
   Player2HealthBar: {fileID: 0}
+  InGameScreenHandler: {fileID: 0}
   boatState:
     id: 
     userName:
       p1UserName: 
       p2UserName: 
     boatHealth:
+      p1Health: 
       p2Health: 
-      p1Heath: 
     boatPosition: 
     stateOfBoatFeatures:
       cannons:
@@ -1165,6 +1167,7 @@ MonoBehaviour:
         state: 
       radar: 
       torpedo: 
+      incomingTorpedo: 
 --- !u!114 &2028005598
 MonoBehaviour:
   m_ObjectHideFlags: 0

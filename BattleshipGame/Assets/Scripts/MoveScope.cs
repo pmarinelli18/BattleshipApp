@@ -10,9 +10,11 @@ public class MoveScope : MonoBehaviour
     private float acc = 0.0f;
     public float acc_fac;
     public int diff_mod;
+    public bool gameStart;
     // Start is called before the first frame update
     void Start()
     {
+        gameStart = false;
         rb = GetComponent<Rigidbody2D>();
         Vector3 init = new Vector3(0, 0.8f, 0);
         System.Random rand = new System.Random();
@@ -32,23 +34,31 @@ public class MoveScope : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (movementJoystick.joystickVec.y != 0)
+        if (gameStart)
         {
-            if ((movementJoystick.joystickVec.x > 0 && acc < 0) || (movementJoystick.joystickVec.x < 0 && acc > 0))
+            if (movementJoystick.joystickVec.y != 0)
             {
-                acc = 0;
+                if ((movementJoystick.joystickVec.x > 0 && acc < 0) || (movementJoystick.joystickVec.x < 0 && acc > 0))
+                {
+                    acc = 0;
+                }
+                //Vector3 movement1 = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
+                acc += movementJoystick.joystickVec.x * acc_fac;
+                Vector3 movement = new Vector3(movementJoystick.joystickVec.x + acc, 0, 0);
+                rb.velocity = new Vector2(movementJoystick.joystickVec.x * scopeSpeed, movementJoystick.joystickVec.y * scopeSpeed);
+                movement = -movement;
+                transform.position = transform.position + movement * Time.deltaTime;
             }
-            //Vector3 movement1 = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
-            acc += movementJoystick.joystickVec.x * acc_fac;
-            Vector3 movement = new Vector3(movementJoystick.joystickVec.x + acc, 0, 0);
-            rb.velocity = new Vector2(movementJoystick.joystickVec.x * scopeSpeed, movementJoystick.joystickVec.y * scopeSpeed);
-            movement = -movement;
-            transform.position = transform.position + movement * Time.deltaTime;
+            else
+            {
+                acc = 0.0f;
+                rb.velocity = Vector2.zero;
+            }
+
         }
-        else
-        {
-            acc = 0.0f;
-            rb.velocity = Vector2.zero;
-        }
+    }
+    public void StartGame()
+    {
+        gameStart = true;
     }
 }

@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class minerender : MonoBehaviour
 {
-    public float speed = 1.0f;
+    public float speed = 5.0f;
     private Rigidbody2D rb;
     public float screenleft;
     public float screenright;
-    private int ran;
 
     // Start is called before the first frame update
     void Start()
     {
+        screenleft = Camera.main.transform.position.x - (Camera.main.aspect * Camera.main.orthographicSize) - 10;
+        screenright = Camera.main.transform.position.x + (Camera.main.aspect * Camera.main.orthographicSize) + 10;
         rb = this.GetComponent<Rigidbody2D>();
-        ran = Random.Range(0, 2);
-        //Debug.Log(ran);
-        if (ran == 1)
+        //ran = Random.Range(0, 2);
+        if (transform.position.x > Camera.main.transform.position.x)
         {
             rb.velocity = new Vector2(-speed, 0);
         }
@@ -31,7 +31,7 @@ public class minerender : MonoBehaviour
     {
         //screenleft = Camera.main.transform.position.x - 2.5f;
         //screenright = Camera.main.transform.position.x + 2.5f;
-        if ((transform.position.x < screenleft && ran == 1) || (transform.position.x > screenright && ran == 0))
+        if ((transform.position.x < screenleft) || (transform.position.x > screenright))
         {
             Destroy(this.gameObject);
         }

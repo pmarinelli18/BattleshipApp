@@ -15,7 +15,7 @@ public class AccountAuthentication : MonoBehaviour
 {
     public string userName;
     public GameObject GameManager;
-    TcpClient client = new TcpClient("localHost", 80);
+    TcpClient client = new TcpClient("localhost", 80);
     public GameObject recieverHandler;
 
     Queue messages = new Queue();
@@ -36,7 +36,7 @@ public class AccountAuthentication : MonoBehaviour
         try
         {
             NetworkStream stream = client.GetStream();
-            Byte[] bytes = new Byte[256];
+            Byte[] bytes = new Byte[2048];
             while (true)
             {
                 if (messages.Count != 0)
@@ -53,7 +53,7 @@ public class AccountAuthentication : MonoBehaviour
                 int i;
 
                 while (stream.DataAvailable) {
-                    bytes = new Byte[256];
+                    bytes = new Byte[2048];
                     Int32 bytesNum = stream.Read(bytes, 0, bytes.Length);
                     // Translate data bytes to a ASCII string.
                     data = System.Text.Encoding.ASCII.GetString(bytes, 0, bytesNum);
@@ -62,6 +62,8 @@ public class AccountAuthentication : MonoBehaviour
                     // Process the data sent by the client.
                     UnityMainThread.wkr.AddJob(() => {
                         recieverHandler = GameObject.Find("SceneConnectionManger");
+                        Debug.Log("AA");
+                        Debug.Log(data);
                         recieverHandler.GetComponent<RecieveMessage>().HandleMessage(data);
                     });
                    

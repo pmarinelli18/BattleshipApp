@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MoveTorpedo : MonoBehaviour
 {
@@ -10,11 +11,14 @@ public class MoveTorpedo : MonoBehaviour
     public float delaytime;
     public int steps;
     public float screenbound;
+    public Text timeup;
+    public bool gameStart;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameStart = false;
     }
 
     // Update is called once per frame
@@ -25,9 +29,15 @@ public class MoveTorpedo : MonoBehaviour
 
     public void MoveUp()
     {
-        for(int i = 0; i < steps; i++)
+        if (gameStart)
         {
-            StartCoroutine(MoveUpI(i));
+            if (timeup.enabled == false)
+            {
+                for (int i = 0; i < steps; i++)
+                {
+                    StartCoroutine(MoveUpI(i));
+                }
+            }
         }
     }
 
@@ -41,10 +51,16 @@ public class MoveTorpedo : MonoBehaviour
 
     public void MoveRight()
     {
-        for (int i = 0; i < steps; i++)
+        if (gameStart)
         {
-            StartCoroutine(MoveRightI(i));
-            //Debug.Log("Move Right" + i);
+            if (timeup.enabled == false)
+            {
+                for (int i = 0; i < steps; i++)
+                {
+                    StartCoroutine(MoveRightI(i));
+                    //Debug.Log("Move Right" + i);
+                }
+            }
         }
     }
 
@@ -61,9 +77,15 @@ public class MoveTorpedo : MonoBehaviour
 
     public void MoveLeft()
     {
-        for (int i = 0; i < steps; i++)
+        if (gameStart)
         {
-            StartCoroutine(MoveLeftI(i));
+            if (timeup.enabled == false)
+            {
+                for (int i = 0; i < steps; i++)
+                {
+                    StartCoroutine(MoveLeftI(i));
+                }
+            }
         }
     }
 
@@ -76,5 +98,9 @@ public class MoveTorpedo : MonoBehaviour
             temp.x -= HorizontalMovement / steps;
             torpedo.position = temp;
         }
+    }
+    public void StartGame()
+    {
+        gameStart = true;
     }
 }
